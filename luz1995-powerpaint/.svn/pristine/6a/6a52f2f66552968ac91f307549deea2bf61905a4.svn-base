@@ -1,0 +1,173 @@
+/*
+* TCSS 305 Autumn 2017
+* Assignment5 PowerPaint
+*/
+
+package gui;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
+import model.LineTool;
+import model.PreviousDrawing;
+import model.Tool;
+
+
+
+/**
+ * A painting panel.
+ * 
+ * @author Zhou Lu
+ * @version 11/11/2017
+ */
+public class PaintPanel extends JPanel {
+    
+
+    /**
+     * The panel width.
+     */
+    public static final int WIDTH = 400;
+    
+    /**
+     * The panel height.
+     */
+    public static final int HEIGHT = 400;
+    
+    /**
+     * a generated id.
+     */
+    private static final long serialVersionUID = 4910397799338910759L;
+
+
+    /**
+     * The background color of the panel.
+     */
+    private Color myColor = Color.WHITE;
+
+    /**
+     * The color to paint with.
+     */
+    private Color myFillColor;
+
+    /** a value to indicate the shape is filled or not.*/
+    private boolean myFillOrNot;
+    /**
+     * The line width.
+     */
+    private int myWidth;
+    
+    /** a field to refer to current tool.*/
+    private Tool myCurrentTool;
+    
+    /** a field for star point in panel.*/
+    private Point myStartPoint;
+    
+    /** a field for end point in panel.*/
+    private Point myEndPoint;
+    
+    /** a array list to have the previous drawing shape.*/
+    private final List<PreviousDrawing> myPreviousShape;
+    
+    
+    // Constructor
+
+    /**
+     * Constructs a new general path panel.
+     */
+    public PaintPanel() {
+        super();
+        myPreviousShape = new ArrayList<>();
+        myCurrentTool = new LineTool();
+        myWidth = 5;
+        myFillColor = new Color(51, 0, 111);
+        myColor = Color.BLACK;
+        myFillOrNot = false;
+        setUpPanel();
+    }
+    
+    /**
+     * set up the paint panel.
+     */
+    private void setUpPanel() {
+        
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(Color.WHITE);
+        
+        final MouseInputAdapter mouseHandler = new MyMouseHandler();
+        addMouseListener(mouseHandler);
+        addMouseMotionListener(mouseHandler);
+    }
+    
+    /**
+     * to set the current tool to the panel.
+     * @param theTool the tool currently being used.
+     */
+    public void setCurrentTool(final Tool theTool) {
+        myCurrentTool = theTool;
+    }
+
+    /**
+     * Paints the current path.
+     * 
+     * @param theGraphics The graphics context to use for painting.
+     */
+    @Override
+    public void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
+        final Graphics2D g2d = (Graphics2D) theGraphics;
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setPaint(myColor);
+        g2d.setStroke(new BasicStroke(myWidth));
+        
+        for (final PreviousDrawing s : myPreviousShape) {            
+            g2d.draw(s.getShape());
+        }
+        
+        g2d.draw(myCurrentTool.getShape());
+
+    }
+
+    // Inner Class
+
+    /**
+     * Listens for mouse clicks, to draw on our panel.
+     */
+    private class MyMouseHandler extends MouseInputAdapter {
+        
+        @Override
+        public void mousePressed(final MouseEvent theEvent) {
+            myStartPoint = theEvent.getPoint();
+            myEndPoint = myStartPoint;
+            myCurrentTool.setStartPoint(myStartPoint);
+        }
+        
+        @Override
+        public void mouseReleased(final MouseEvent theEvent) {
+            myEndPoint = theEvent.getPoint();
+            myPreviousShape.add(new PreviousDrawing(myCurrentTool.getShape(),
+                                                    myWidth, myColor, 
+                                                    myFillColor, myFillOrNot));
+            repaint();
+        }
+        
+        @Override
+        public void mouseDragged(final MouseEvent theEvent) {
+            myEndPoint = theEvent.getPoint();
+            myCurrentTool.setEndPoint(myEndPoint);
+            repaint();
+        }
+    }
+
+
+}

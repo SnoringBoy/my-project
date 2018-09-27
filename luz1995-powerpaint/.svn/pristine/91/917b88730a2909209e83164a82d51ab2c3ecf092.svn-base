@@ -1,0 +1,45 @@
+package model;
+
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+
+import gui.PaintPanel;
+
+/**
+ * 
+ * @author Zhou Lu
+ *  @version 11/11/2017
+ */
+public class RRectangleAction extends AbstractAction {
+
+    /** a generated ID. */
+    private static final long serialVersionUID = 6884740257865269903L;
+
+    /** a field that stores the description of the action. */
+    private static final String RRECTANGLE_STRING = "RoundRectangle";
+
+    /** a field to store the PaintPanel. */
+    private PaintPanel myPanel;
+
+    
+    /**
+     * construct the LineAction.
+     * @param thePanel receive the Panel from the caller.
+     */
+    public RRectangleAction(final PaintPanel thePanel) {
+        super(RRECTANGLE_STRING, new ImageIcon("./src/resources/roundrectangle.gif"));
+        myPanel = thePanel;
+        putValue(Action.SHORT_DESCRIPTION, RRECTANGLE_STRING);
+    }
+    
+    @Override
+    public void actionPerformed(final ActionEvent theEvent) {
+
+    }
+
+
+}

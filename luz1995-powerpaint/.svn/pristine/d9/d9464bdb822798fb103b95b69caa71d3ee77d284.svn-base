@@ -1,0 +1,23 @@
+package model;
+
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+/**
+ * 
+ * @author Zhou Lu
+ * @version 11/11/2017
+ */
+public class PencilAction extends AbstractAction {
+
+    /** A generated serialization ID.*/
+    private static final long serialVersionUID = -3582869610604795939L;
+
+    @Override
+    public void actionPerformed(final ActionEvent theEvent) {
+        // TODO Auto-generated method stub
+
+    }
+
+}

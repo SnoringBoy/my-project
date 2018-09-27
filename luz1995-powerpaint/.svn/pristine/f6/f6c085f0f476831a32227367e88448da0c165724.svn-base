@@ -1,0 +1,16 @@
+/*
+* TCSS 305 Autumn 2017
+* Assignment5 PowerPaint
+*/
+
+package model;
+
+/**
+ * A interface all tool need to implement.
+ * 
+ * @author Zhou Lu
+ * @version 11/12/2017
+ */
+public interface Tool {
+
+}

@@ -1,0 +1,30 @@
+/*
+* TCSS 305 Autumn 2017
+* Assignment5 PowerPaint
+*/
+
+package model;
+
+import java.awt.Shape;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
+
+/**
+ * a class for the Line drawing.
+ * 
+ * @author Zhou Lu
+ * @version 11/12/2017
+ */
+public class PencilTool extends AbstractTool {
+
+    @Override
+    public Shape getShape() {
+        final Path2D path = new GeneralPath();
+        path.setWindingRule(GeneralPath.WIND_EVEN_ODD);
+        
+        path.moveTo(getStartPoint().getX(), getStartPoint().getY());
+        path.lineTo(getEndPoint().getX(), getEndPoint().getY());
+        return path;      
+    }
+ 
+}

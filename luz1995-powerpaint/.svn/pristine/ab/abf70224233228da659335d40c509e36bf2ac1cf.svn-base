@@ -1,0 +1,44 @@
+package model;
+
+import java.awt.event.ActionEvent;
+
+import java.beans.PropertyChangeListener;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+
+import gui.PaintPanel;
+
+/**
+ * a class that for line drawing.
+ * 
+ * @author Zhou Lu
+ * @version 11/11/2017
+ */
+public class LineAction extends AbstractAction {
+
+    /** a field that stores the description of the action. */
+    private static final String LINE_STRING = "Line";
+    
+    /** a field to store the PaintPanel. */
+    private PaintPanel myPanel;
+
+    
+    /**
+     * construct the LineAction.
+     * @param thePanel receive the Panel from the caller.
+     */
+    public LineAction(final PaintPanel thePanel) {
+        super(LINE_STRING, new ImageIcon("./src/resources/line.gif"));
+        myPanel = thePanel;
+        putValue(Action.SHORT_DESCRIPTION, LINE_STRING);
+    }
+    
+    @Override
+    public void actionPerformed(final ActionEvent theEvent) {
+        
+
+    }
+
+
+}

@@ -1,0 +1,76 @@
+/*
+* TCSS 305 Autumn 2017
+* Assignment5 PowerPaint
+*/
+
+package gui;
+
+import java.awt.BorderLayout;
+
+import java.awt.Toolkit;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import model.EllipseAction;
+import model.LineAction;
+import model.PencilAction;
+import model.RRectangleAction;
+import model.RectangleAction;
+
+/**
+* The Graphical User Interface for this example program.
+* 
+* @author Zhou Lu   
+* @version 11/11/2017
+*/
+public class GUI {
+
+   /**
+    * Construct the GUI.
+    */
+    public GUI() {
+        setup(); 
+    }
+
+   /**
+    * Sets up the GUI.
+    */
+    private void setup() {
+        final JFrame guiFrame = new JFrame("PowerPaint");
+
+        final GUIMenuBar menuBar = new GUIMenuBar(guiFrame);
+        final GUIToolBar toolBar = new GUIToolBar();
+        final PaintPanel panel = new PaintPanel();
+
+        final Action[] actions = {new LineAction(panel), 
+                        new PencilAction(panel), new RectangleAction(panel), 
+                        new RRectangleAction(panel), new EllipseAction(panel)};
+
+        for (final Action action : actions) {
+            menuBar.createMenuButton(action);
+            toolBar.createToolBarButton(action);
+        }
+
+        guiFrame.setJMenuBar(menuBar);
+        
+        final ImageIcon img = new ImageIcon("./src/resources/pubg.jpg");
+        guiFrame.setIconImage(img.getImage());
+
+        guiFrame.add(toolBar, BorderLayout.SOUTH);
+        guiFrame.add(panel, BorderLayout.CENTER);
+        guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        guiFrame.pack();
+       
+        /** A ToolKit. */
+        final Toolkit kit = Toolkit.getDefaultToolkit();
+       
+        guiFrame.setLocation(
+            (int) (kit.getScreenSize().getWidth() / 2 - guiFrame.getWidth() / 2),
+            (int) (kit.getScreenSize().getHeight() / 2 - guiFrame.getHeight() / 2));
+       
+        guiFrame.setVisible(true);
+    }
+
+}
+

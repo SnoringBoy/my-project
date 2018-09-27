@@ -1,0 +1,159 @@
+/*
+* TCSS 305 Autumn 2017
+* Assignment5 PowerPaint
+*/
+
+package gui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Action;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
+import javax.swing.SwingConstants;
+
+/**
+ * 
+ * @author Zhou Lu
+ * @version 11/11/2017
+ */
+public class GUIMenuBar extends JMenuBar {
+
+    /** a generated ID.*/
+    private static final long serialVersionUID = 7942609664174632315L;
+    
+    /** major tick spacing for the slider. */ 
+    private static final int MAJOR_TICK_SPACING = 5;
+
+    /** minor tick spacing for the slider. */ 
+    private static final int MINOR_TICK_SPACING = 1;
+
+    /** maximum of the slider. */ 
+    private static final int MAX_FRAMES = 25;
+
+    /** initial start value of the slider.*/
+    private static final int INITIAL_FRAMES = 5;
+    
+    /** A button group for radio buttons. */
+    private final ButtonGroup myGroup;
+    
+    /** A button to show the about JOptionPane. */
+    private JMenuItem myAboutButton;
+    
+    /** A menuitem for the thickness. */
+    private JMenu myThickness;
+    
+    /** A menuitem for the the Draw color. */
+    private JMenuItem myDrawColor;
+    
+    /** A  to show the about JOptionPane. */
+    private JMenuItem myFillColor;
+    
+    /** A  field for the checkbox. */
+    private JCheckBox myFillCheck;
+    
+    /** A field for the clear button. */
+    private JMenuItem myClear;
+    
+    /** a field for the toolsMenu.*/
+    private JMenu toolsMenu;
+    
+    /**
+     * construct the menu bar.
+     * @param theFrame 
+     */
+    public GUIMenuBar(final JFrame theFrame) {
+        super();
+
+        myGroup = new ButtonGroup();
+        
+        setUpMenuItem();      
+        setup(theFrame);
+    }
+    
+    /** 
+     * method to setUp all the menu item.
+     */
+    private void setUpMenuItem() {
+        
+        myAboutButton = new JMenuItem("About");
+        myDrawColor = new JMenuItem("Draw Color...");
+        myFillColor = new JMenuItem("Fill Color...");
+        myThickness = new JMenu("Thickness");
+        myFillCheck = new JCheckBox("Fill");
+        myClear = new JMenuItem("Clear");
+        myClear.setEnabled(false);
+        
+    }
+
+    /**
+     * Sets up the components of the menu.
+     * @param theFrame the JFrame containing this menu.
+     */
+    private void setup(final JFrame theFrame) {
+        final JMenu optionsMenu = new JMenu("Options");
+        toolsMenu = new JMenu("Tools");
+        final JMenu helpMenu = new JMenu("Help");
+        
+        myAboutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent theEvent) {
+                
+                
+                final ImageIcon img = new ImageIcon("./src/resources/pubg.jpg");
+                
+                JOptionPane.showMessageDialog(null, "TCSS 305 PowerPaint\n"
+                                + "Autumn 2017\n"
+                                + "Zhou Lu", "About", JOptionPane.INFORMATION_MESSAGE, img);
+            }
+        });
+             
+        optionsMenu.add(myThickness);
+        optionsMenu.addSeparator();
+        optionsMenu.add(myDrawColor);
+        optionsMenu.add(myFillColor);
+        optionsMenu.addSeparator();
+        optionsMenu.add(myFillCheck);
+        optionsMenu.addSeparator();
+        optionsMenu.add(myClear);
+        helpMenu.add(myAboutButton);
+        add(optionsMenu);
+        add(toolsMenu);
+        add(helpMenu);
+        setUpSlider();
+    }
+
+    /**
+     * Creates a radio button menu item, associates an action with the button,
+     * adds the button to a button group, adds the button to the View menu.
+     * 
+     * @param theAction the Action to associate with the new button being
+     *            created
+     */
+    public void createMenuButton(final Action theAction) {
+        final JRadioButtonMenuItem createdButton = new JRadioButtonMenuItem(theAction);
+        myGroup.add(createdButton);
+        toolsMenu.add(createdButton);
+    }
+    
+    /**
+     * this method is for setting up the slider.
+     */
+    private void setUpSlider() {
+        
+        final JSlider slider = new JSlider(SwingConstants.HORIZONTAL, 0, MAX_FRAMES,
+                               INITIAL_FRAMES);
+        slider.setMajorTickSpacing(MAJOR_TICK_SPACING);
+        slider.setMinorTickSpacing(MINOR_TICK_SPACING);
+        slider.setPaintLabels(true);
+        slider.setPaintTicks(true);
+        myThickness.add(slider);
+    }
+}

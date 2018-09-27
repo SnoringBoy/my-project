@@ -1,0 +1,16 @@
+/*
+* TCSS 305 Autumn 2017
+* Assignment5 PowerPaint
+*/
+
+package model;
+
+/**
+ * abstract class all tools need to extend.
+ * 
+ * @author Zhou Lu
+ * @version 11/12/2017
+ */
+public abstract class AbstractTool implements Tool {
+
+}
